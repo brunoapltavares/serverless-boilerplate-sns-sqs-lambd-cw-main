@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@functions/*": ["src/functions/*"],
+      "@libs/*": ["src/libs/*"],
+      "@constants": ["src/constants"],
+      "@utils": ["src/functions/myFunction/utils"],
+      "@types": ["src/functions/myFunction/types"],
+      "@interface": ["src/functions/myFunction/strategy/interface"],
+      "@entities": ["src/functions/myFunction/strategy/entities"],
+      "@route/*": ["src/functions/myFunction/strategy/events/route/*"],
+      "@service/*": ["src/functions/myFunction/strategy/events/service/*"],
+      "@repository": ["src/functions/myFunction/repository"]
+    }
+  }
+}

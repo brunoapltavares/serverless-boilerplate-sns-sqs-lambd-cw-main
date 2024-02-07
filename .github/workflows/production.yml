@@ -1,0 +1,36 @@
+name: Production
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  production:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.17.0
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Skip post-install scripts here, as a malicious
+      # script could steal NODE_AUTH_TOKEN.
+      - name: Install Dependencies
+        run: yarn bootstrap --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Install Serverless
+        run: yarn global add serverless
+
+      - name: Deploy to Production
+        run: yarn deploy:production
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
